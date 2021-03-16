@@ -1,34 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Distribute Purchase Order
 
-## Getting Started
+an example React project from `Next.js`
 
-First, run the development server:
+## Goal
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- Responsive website
+- Calculate price of distribution of production at specific locations
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Application Functionality
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- System ask user to pick
+  - a product
+  - Date of distribution
+  - Location
+  - Amount per location
+- Users can remove locations which they already added
+- Provide price with dynamically update as they update form
+- Employ validation to make sure user entered a valid date and has not try to order more unit than possible for a given date, product and location
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## API
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Products GET https://5efabb3a80d8170016f758ee.mockapi.io/products
+  - Id
+  - Name = name of product
+  - Max production = maximum number of product available per day in the future
+    - Key = number of day in the future
+    - Value = number of items that can be produced
+    - note: if number of days in the future user has picked is greater than the largest day then use the largest
+  - Price per unit = cost per item
+- Locations GET https://5efabb3a80d8170016f758ee.mockapi.io/locations
+  - Id
+  - Name
+  - Lat
+  - Long
+  - Max diet = total number of item can be distributed in one day at the location
+  - Fee = daily fee of distributing items at the location
+- CartPOST https://5efabb3a80d8170016f758ee.mockapi.io/cart
+  - Date
+  - Product id
+  - Locations = array of (location id, quantity)
 
-## Learn More
+## UI
 
-To learn more about Next.js, take a look at the following resources:
+Should support desktop and mobile
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Calculator Functionality
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- User pick product and date base on maximum number of date available for product on that date
+- User add locations by click “add”, system will show map, once user add location user can adjust the number of units for the location
+- Location cost will be cost of the unit for that location and the location fee
+- As location added and configured the total unit and cost will updated
+- Location can be removed by click on “x”
+- When submit, post to cart endpoint and show user a simple success page
 
-## Deploy on Vercel
+### Location Map Functionality
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- On desktop show as modal
+- On mobile show as full page
+- Display all location on “google map” using their position
+- Marker selected the pop up display
+  - Name of location
+  - Maximum number of units can be distributed
+  - Fee for distribution
+  - Add button
+- Add button will return the user to the calculator page and add this location to the list
+- Add button should be greyed out if location already been added
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Validation
+
+- Date
+  - can be only from tomorrow until 1 week later
+- Location units
+  - cannot be larger than the locations max distribution
+  - total sum of all location units cannot be larger than the available production for that date and product
+  - user need to be notified with a message if the number are invalid
+
+## Dependencies
+
+- create-next-app
+- @chakra-ui/react
+- swr
+- @reduxjs/toolkit
+- google-map-react
+- react-hook-form
+
+## Dev Dependencies
+
+- prettier
+- husky
+- eslint
+- line-staged
+- commitlint
+- commitizen
