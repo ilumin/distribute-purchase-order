@@ -8,7 +8,9 @@
     "start": "next start",
     "release": "standard-version",
     "lint": "eslint --fix",
-    "format": "prettier --write './**/*.{js,jsx,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,json}' --config ./.prettierrc",
+    "start:storybook": "start-storybook -p 5555",
+    "build:storybook": "build-storybook"
   },
   "dependencies": {
     "next": "10.0.9",
@@ -16,8 +18,16 @@
     "react-dom": "17.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.10",
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-controls": "^6.1.21",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/addon-viewport": "^6.1.21",
+    "@storybook/react": "^6.1.21",
+    "babel-loader": "^8.2.2",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
