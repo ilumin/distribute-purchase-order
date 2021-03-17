@@ -1,3 +1,4 @@
+import { Simple as LocationInput } from '../LocationInput/LocationInput.stories'
 import { Simple as SimpleSelect } from '../Select/Select.stories'
 import FormField from './FormField'
 
@@ -22,4 +23,10 @@ SingleInputWithError.args = {
   helpText: 'Pick RGB',
   required: true,
   error: 'Please select color.',
+}
+
+export const AdvanceInput = Template.bind({})
+AdvanceInput.args = {
+  children: <LocationInput {...LocationInput.args} />,
+  label: 'Location',
 }
