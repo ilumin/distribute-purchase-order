@@ -1,7 +1,8 @@
-import { AddIcon, CloseIcon } from '@chakra-ui/icons'
-import { Box, Button, IconButton, Input } from '@chakra-ui/react'
+import { AddIcon } from '@chakra-ui/icons'
+import { Box, Button, Input } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
+import ButtonRemove from '../ButtonRemove'
 import Table from '../Table'
 
 const LocationInput = ({
@@ -34,11 +35,7 @@ const LocationInput = ({
   }
 
   const renderRemoveButton = ({ location }) => (
-    <IconButton
-      colorScheme="red"
-      icon={<CloseIcon />}
-      onClick={handleRemove(location)}
-    />
+    <ButtonRemove onClick={handleRemove(location)} />
   )
 
   const columns = [
