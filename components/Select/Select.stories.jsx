@@ -5,9 +5,9 @@ export default {
   component: Select,
 }
 
-const Theme = (args) => <Select {...args} />
+const Template = (args) => <Select {...args} />
 
-export const Simple = Theme.bind({})
+export const Simple = Template.bind({})
 Simple.args = {
   options: [
     {
@@ -26,7 +26,7 @@ Simple.args = {
   placeholder: 'Select Color',
 }
 
-export const Loading = Theme.bind({})
+export const Loading = Template.bind({})
 Loading.args = {
   placeholder: 'Loading ...',
   loading: true,
