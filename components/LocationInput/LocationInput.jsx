@@ -1,7 +1,8 @@
 import { AddIcon } from '@chakra-ui/icons'
-import { Box, Button, Input } from '@chakra-ui/react'
+import { Box, Input } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
+import Button from '../Button'
 import ButtonRemove from '../ButtonRemove'
 import Table from '../Table'
 
