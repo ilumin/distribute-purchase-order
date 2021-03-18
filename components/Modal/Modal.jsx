@@ -7,17 +7,15 @@ import {
 } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
-const Modal = ({ children, ...props }) => {
-  return (
-    <ChakraModal {...props}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalCloseButton />
-        <ModalBody>{children}</ModalBody>
-      </ModalContent>
-    </ChakraModal>
-  )
-}
+const Modal = ({ children, ...props }) => (
+  <ChakraModal {...props}>
+    <ModalOverlay />
+    <ModalContent>
+      <ModalCloseButton />
+      <ModalBody>{children}</ModalBody>
+    </ModalContent>
+  </ChakraModal>
+)
 
 Modal.propTypes = {
   children: PropTypes.node,
