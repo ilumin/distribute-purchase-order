@@ -1,4 +1,4 @@
-import { Flex, useDisclosure } from '@chakra-ui/react'
+import { Flex, Text, useDisclosure } from '@chakra-ui/react'
 import Button from 'components/Button'
 import Form from 'components/Form'
 import LocationInput from 'components/LocationInput/LocationInput'
@@ -94,8 +94,16 @@ export default function Cart() {
               onRemove={handleRemoveLocation}
             />
           </Form.Field>
-          <Form.Field label="Total Units">{cart.total_qty}</Form.Field>
-          <Form.Field label="Total Cost">{cart.total_cost}</Form.Field>
+          <Form.Field label="Total Units">
+            <Text pt={['0.5em']} pl={['1em']}>
+              {cart.total_qty}
+            </Text>
+          </Form.Field>
+          <Form.Field label="Total Cost">
+            <Text pt={['0.5em']} pl={['1em']}>
+              {cart.total_cost}
+            </Text>
+          </Form.Field>
           <Form.Field>
             <Button primary>Submit</Button>
           </Form.Field>
