@@ -1,8 +1,10 @@
 import {
+  Flex,
   Skeleton,
   Table as ChakraTable,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
@@ -22,15 +24,28 @@ const Table = ({ data, columns, loading, ...props }) => {
         </Tr>
       </Thead>
       <Tbody>
+        {data.length <= 0 && (
+          <Tr>
+            <Td colSpan={columns.length}>
+              <Flex align="center" justifyContent="center" p={[4]}>
+                <Text fontSize="sm" color="gray.500">
+                  Empty
+                </Text>
+              </Flex>
+            </Td>
+          </Tr>
+        )}
         {data.map((row, index) => (
           <Tr key={index}>
             {columns.map((column) => {
               return (
                 <Td key={`${column.key}-${index}`}>
                   <Skeleton isLoaded={!loading}>
-                    {column.render
-                      ? column.render(row, index)
-                      : row[column.key]}
+                    {column.render ? (
+                      column.render(row, index)
+                    ) : (
+                      <Text>{row[column.key]}</Text>
+                    )}
                   </Skeleton>
                 </Td>
               )
