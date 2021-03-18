@@ -29,9 +29,17 @@ const LocationInput = ({
   const renderAppendButton = () => {
     if (onAppend)
       return (
-        <Button leftIcon={<AddIcon />} onClick={handleAppend}>
-          Add
-        </Button>
+        <Box margin={['-1em 0 -0.5em']}>
+          <Button
+            fontSize="sm"
+            leftIcon={<AddIcon />}
+            onClick={handleAppend}
+            colorScheme="cyan"
+            color="white"
+          >
+            Add
+          </Button>
+        </Box>
       )
   }
 
