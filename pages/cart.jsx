@@ -5,13 +5,10 @@ import DateSelector from 'containers/DateSelector'
 import LocationSelector from 'containers/LocationSelector'
 import ProductSelector from 'containers/ProductSelector'
 import Head from 'next/head'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { cartSelector } from 'reducers/cartSlice'
-import { fetchProducts } from 'reducers/productSlice'
 
 export default function Cart() {
-  const dispatch = useDispatch()
   const cart = useSelector(cartSelector.cart)
 
   console.log('cart:', cart)
@@ -19,10 +16,6 @@ export default function Cart() {
   const handleSelectDate = (date) => {
     console.log('select date:', date)
   }
-
-  useEffect(() => {
-    dispatch(fetchProducts())
-  }, [])
 
   return (
     <>

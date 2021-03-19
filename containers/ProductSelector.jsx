@@ -1,8 +1,10 @@
 import Select from 'components/Select'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   clearDate,
   clearProduct,
+  fetchProducts,
   productSelector,
   selectProduct,
 } from 'reducers/productSlice'
@@ -21,6 +23,10 @@ const ProductSelector = () => {
 
     dispatch(selectProduct(id))
   }
+
+  useEffect(() => {
+    dispatch(fetchProducts())
+  }, [])
 
   return (
     <Select
