@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const submitCart = createAsyncThunk(
@@ -74,5 +74,21 @@ const cartSlice = createSlice({
 })
 
 export const { addItem, removeItem, updateItem } = cartSlice.actions
+
+const cart = (state) => state.cart
+const selectedProduct = (state) => state.product.selectedProduct
+const selectedDate = (state) => state.product.selectedDate
+export const cartSelector = {
+  cart: createSelector(
+    cart,
+    selectedProduct,
+    selectedDate,
+    (cart, product, date) => ({
+      ...cart,
+      product,
+      date,
+    })
+  ),
+}
 
 export default cartSlice.reducer
