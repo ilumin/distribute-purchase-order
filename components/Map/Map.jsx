@@ -12,7 +12,6 @@ import { useCallback, useState } from 'react'
 const Map = ({ markers, zoom, onRenderWindow, ...props }) => {
   const [selectedPlace, setSelectedPlace] = useState(null)
   const [markerMap, setMarkerMap] = useState({})
-  const [center, setCenter] = useState({})
   const [infoOpen, setInfoOpen] = useState(false)
 
   const { isLoaded } = useLoadScript({
@@ -34,7 +33,6 @@ const Map = ({ markers, zoom, onRenderWindow, ...props }) => {
 
   const markerClickHandler = (place) => {
     setSelectedPlace(place)
-    setCenter(place.pos)
 
     if (!onRenderWindow) return
 
@@ -55,7 +53,6 @@ const Map = ({ markers, zoom, onRenderWindow, ...props }) => {
     return (
       <GoogleMap
         onLoad={onLoad}
-        center={center}
         zoom={zoom}
         mapContainerStyle={{
           height: '100%',
