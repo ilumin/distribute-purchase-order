@@ -89,6 +89,14 @@ export const cartSelector = {
       date,
     })
   ),
+  validation: createSelector(
+    cart,
+    selectedProduct,
+    selectedDate,
+    (cart, product, date) => ({
+      locationSelect: product !== undefined && date !== undefined,
+    })
+  ),
 }
 
 export default cartSlice.reducer

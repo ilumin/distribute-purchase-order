@@ -17,8 +17,8 @@ export const fetchProducts = createAsyncThunk(
 const productSlice = createSlice({
   name: 'product',
   initialState: {
-    selectedProduct: {},
-    selectedDate: {},
+    selectedProduct: undefined,
+    selectedDate: undefined,
     products: [],
     loading: true,
     error: undefined,
@@ -67,7 +67,7 @@ const product = (state) => state.product
 export const productSelector = {
   availableDates: createSelector(
     product,
-    (product) => product.selectedProduct.available_dates || []
+    ({ selectedProduct = {} }) => selectedProduct.available_dates || []
   ),
   selectedProduct: createSelector(
     product,
