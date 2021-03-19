@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const fetchProducts = createAsyncThunk(
@@ -18,6 +18,7 @@ const productSlice = createSlice({
   name: 'product',
   initialState: {
     selectedProduct: {},
+    selectedDate: {},
     products: [],
     loading: true,
     error: undefined,
@@ -26,6 +27,18 @@ const productSlice = createSlice({
     selectProduct: (state, action) => {
       state.selectedProduct =
         state.products.find((item) => item.id === action.payload) || {}
+    },
+    clearProduct: (state) => {
+      state.selectedProduct = {}
+    },
+    selectDate: (state, action) => {
+      const { id } = action.payload
+      state.selectedDate = state.selectedProduct.available_dates.find(
+        (item) => item.id === id
+      )
+    },
+    clearDate: (state) => {
+      state.selectedDate = {}
     },
   },
   extraReducers: {
@@ -43,14 +56,25 @@ const productSlice = createSlice({
   },
 })
 
-export const { selectProduct } = productSlice.actions
+export const {
+  selectProduct,
+  selectDate,
+  clearProduct,
+  clearDate,
+} = productSlice.actions
 
+const product = (state) => state.product
 export const productSelector = {
-  availableDates: ({ product }) =>
-    product.selectedProduct.available_dates || [],
-  selectedProduct: ({ product }) => product.selectedProduct,
-  allProducts: ({ product }) => product.products,
-  isLoading: ({ product }) => product.loading,
+  availableDates: createSelector(
+    product,
+    (product) => product.selectedProduct.available_dates || []
+  ),
+  selectedProduct: createSelector(
+    product,
+    (product) => product.selectedProduct
+  ),
+  allProducts: createSelector(product, (product) => product.products),
+  isLoading: createSelector(product, (product) => product.loading),
 }
 
 export default productSlice.reducer
