@@ -24,9 +24,8 @@ const productSlice = createSlice({
   },
   reducers: {
     selectProduct: (state, action) => {
-      state.selectedProduct = state.products.filter(
-        (item) => item.id === action.payload
-      )
+      state.selectedProduct =
+        state.products.find((item) => item.id === action.payload) || {}
     },
   },
   extraReducers: {
@@ -47,9 +46,11 @@ const productSlice = createSlice({
 export const { selectProduct } = productSlice.actions
 
 export const productSelector = {
-  availableDates: ({ product }) => product.selectedProduct.available_dates,
+  availableDates: ({ product }) =>
+    product.selectedProduct.available_dates || [],
   selectedProduct: ({ product }) => product.selectedProduct,
   allProducts: ({ product }) => product.products,
+  isLoading: ({ product }) => product.loading,
 }
 
 export default productSlice.reducer
