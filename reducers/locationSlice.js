@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+import { addItem, removeItem } from './cartSlice'
+
 export const fetchLocations = createAsyncThunk(
   'product/fetchLocations',
   async () => {
@@ -22,28 +24,7 @@ const locationSlice = createSlice({
     loading: true,
     error: undefined,
   },
-  reducers: {
-    selectLocation: (state, action) => {
-      state.selectedLocations.push(action.payload)
-    },
-    removeLocation: (state, action) => {
-      state.selectedLocations = state.selectedLocations.filter(
-        (item) => item.id !== action.payload
-      )
-    },
-    updateLocationQty: (state, action) => {
-      const { id, qty } = action.payload
-      state.selectedLocations = state.selectedLocations.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            qty,
-          }
-        }
-        return item
-      })
-    },
-  },
+  // reducers: {},
   extraReducers: {
     [fetchLocations.pending]: (state) => {
       state.loading = true
@@ -55,6 +36,16 @@ const locationSlice = createSlice({
     [fetchLocations.fulfilled]: (state, action) => {
       state.loading = false
       state.locations = action.payload
+    },
+    [addItem]: (state, action) => {
+      const { location } = action.payload
+      state.selectedLocations.push(location)
+    },
+    [removeItem]: (state, action) => {
+      const { id } = action.payload
+      state.selectedLocations = state.selectedLocations.filter(
+        (item) => item.id !== id
+      )
     },
   },
 })
