@@ -7,7 +7,7 @@ const products = 'https://5efabb3a80d8170016f758ee.mockapi.io/products'
 
 const parseAvailableDate = (date, max_production) => {
   return Object.keys(max_production).map((key) => ({
-    date_key: key,
+    id: key,
     date: format(addDays(date, key), DATE_FORMAT),
     max_qty: max_production[key],
   }))
