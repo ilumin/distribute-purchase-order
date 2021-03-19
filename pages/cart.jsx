@@ -8,7 +8,6 @@ import Head from 'next/head'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { cartSelector } from 'reducers/cartSlice'
-import { fetchLocations } from 'reducers/locationSlice'
 import { fetchProducts } from 'reducers/productSlice'
 
 export default function Cart() {
@@ -23,7 +22,6 @@ export default function Cart() {
 
   useEffect(() => {
     dispatch(fetchProducts())
-    dispatch(fetchLocations())
   }, [])
 
   return (

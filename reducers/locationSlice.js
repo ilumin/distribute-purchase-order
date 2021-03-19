@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 import { addItem, removeItem } from './cartSlice'
@@ -56,9 +56,14 @@ export const {
   updateLocationQty,
 } = locationSlice.actions
 
+const location = (state) => state.location
 export const locationSelector = {
-  selectedLocations: ({ location }) => location.selectedLocations,
-  allLocations: ({ location }) => location.locations,
+  selectedLocations: createSelector(
+    location,
+    (location) => location.selectedLocations
+  ),
+  allLocations: createSelector(location, (location) => location.locations),
+  isLoading: createSelector(location, (location) => location.loading),
 }
 
 export default locationSlice.reducer

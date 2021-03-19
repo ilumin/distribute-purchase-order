@@ -15,7 +15,9 @@ const LocationSelect = ({ locations, loading, onSelect }) => {
 
   return (
     <Skeleton isLoaded={!loading}>
-      <Map markers={locations} onRenderWindow={renderLocationInfo} />
+      {!loading && (
+        <Map markers={locations} onRenderWindow={renderLocationInfo} />
+      )}
     </Skeleton>
   )
 }

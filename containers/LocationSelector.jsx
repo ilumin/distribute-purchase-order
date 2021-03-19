@@ -2,20 +2,26 @@ import { useDisclosure, useToast } from '@chakra-ui/react'
 import LocationInput from 'components/LocationInput'
 import LocationSelect from 'components/LocationSelect'
 import Modal from 'components/Modal'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { cartSelector } from 'reducers/cartSlice'
-import { locationSelector } from 'reducers/locationSlice'
+import { fetchLocations, locationSelector } from 'reducers/locationSlice'
 
 // eslint-disable-next-line
 const LocationSelector = ({ onRemoveLocation, onAddLocation }) => {
+  const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
+  const isLoading = useSelector(locationSelector.isLoading)
   const cart = useSelector(cartSelector.cart)
   const validation = useSelector(cartSelector.validation)
   const locations = useSelector(locationSelector.allLocations)
 
   const showLocationSelect = () => {
-    if (validation.locationSelect) return void onOpen()
+    if (validation.locationSelect) {
+      dispatch(fetchLocations())
+      onOpen()
+      return
+    }
 
     toast({
       title: 'Warning',
@@ -42,7 +48,11 @@ const LocationSelector = ({ onRemoveLocation, onAddLocation }) => {
         onRemove={handleRemoveLocation}
       />
       <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
-        <LocationSelect locations={locations} onSelect={handleAddLocation} />
+        <LocationSelect
+          loading={isLoading}
+          locations={locations}
+          onSelect={handleAddLocation}
+        />
       </Modal>
     </>
   )
