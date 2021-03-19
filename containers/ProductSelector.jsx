@@ -1,14 +1,25 @@
 import Select from 'components/Select'
 import { useDispatch, useSelector } from 'react-redux'
-import { productSelector, selectProduct } from 'reducers/productSlice'
+import {
+  clearDate,
+  clearProduct,
+  productSelector,
+  selectProduct,
+} from 'reducers/productSlice'
 
 const ProductSelector = () => {
   const dispatch = useDispatch()
   const productLoading = useSelector(({ product }) => product.loading)
   const allProducts = useSelector(productSelector.allProducts)
 
-  const handleSelectProduct = (product_id) => {
-    dispatch(selectProduct(product_id))
+  const handleSelectProduct = (id) => {
+    if (!id) {
+      dispatch(clearProduct())
+      dispatch(clearDate())
+      return
+    }
+
+    dispatch(selectProduct(id))
   }
 
   return (

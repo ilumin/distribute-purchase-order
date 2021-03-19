@@ -1,17 +1,21 @@
 import Select from 'components/Select'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { productSelector } from 'reducers/productSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { productSelector, selectDate } from 'reducers/productSlice'
 
 // eslint-disable-next-line
 const DateSelector = ({ onSelect }) => {
+  const dispatch = useDispatch()
   const [value, setValue] = useState('')
   const productLoading = useSelector(({ product }) => product.loading)
   const availableDates = useSelector(productSelector.availableDates)
 
-  const handleSelectDate = (date) => {
-    const selectedDate = availableDates.find((item) => item.id === date)
-    setValue(date)
+  const handleSelectDate = (id) => {
+    setValue(id)
+
+    const selectedDate = availableDates.find((item) => item.id === id)
+    dispatch(selectDate(selectedDate))
+
     onSelect && onSelect(selectedDate)
   }
 
