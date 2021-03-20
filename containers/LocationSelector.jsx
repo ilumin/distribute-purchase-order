@@ -3,11 +3,11 @@ import LocationInput from 'components/LocationInput'
 import LocationSelect from 'components/LocationSelect'
 import Modal from 'components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { cartSelector } from 'reducers/cartSlice'
+import { addItem, cartSelector } from 'reducers/cartSlice'
 import { fetchLocations, locationSelector } from 'reducers/locationSlice'
 
 // eslint-disable-next-line
-const LocationSelector = ({ onRemoveLocation, onAddLocation }) => {
+const LocationSelector = () => {
   const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
@@ -33,11 +33,12 @@ const LocationSelector = ({ onRemoveLocation, onAddLocation }) => {
   }
 
   const handleRemoveLocation = () => {
-    onRemoveLocation && onRemoveLocation(location)
+    // onRemoveLocation && onRemoveLocation(location)
   }
 
-  const handleAddLocation = () => {
-    onAddLocation && onAddLocation(location)
+  const handleAddLocation = (location) => {
+    dispatch(addItem({ product: cart.product, location }))
+    onClose()
   }
 
   return (

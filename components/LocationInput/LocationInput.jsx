@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons'
-import { Box, Input } from '@chakra-ui/react'
+import { Box, NumberInput, NumberInputField } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
 import Button from '../Button'
@@ -22,9 +22,17 @@ const LocationInput = ({
     onRemove && onRemove(place)
   }
 
-  const renderUnit = ({ units }) => <Input value={units} />
+  const renderQty = ({ qty, max_qty }) => (
+    <NumberInput value={qty} max={max_qty}>
+      <NumberInputField />
+    </NumberInput>
+  )
 
-  const renderCost = ({ cost }) => <Input value={cost} />
+  const renderTotalPrice = ({ total_price }) => (
+    <NumberInput value={total_price} precision={2} variant="unstyled" disabled>
+      <NumberInputField />
+    </NumberInput>
+  )
 
   const renderAppendButton = () => {
     if (onAppend)
@@ -48,9 +56,9 @@ const LocationInput = ({
   )
 
   const columns = [
-    { key: 'place', label: 'Place' },
-    { key: 'units', label: 'Units', render: renderUnit },
-    { key: 'cost', label: 'Cost', render: renderCost },
+    { key: 'name', label: 'Place' },
+    { key: 'qty', label: 'Units', render: renderQty },
+    { key: 'total_price', label: 'Cost', render: renderTotalPrice },
     {
       key: 'action',
       label: renderAppendButton(),
