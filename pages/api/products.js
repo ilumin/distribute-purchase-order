@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { addDays, format } from 'date-fns'
 
-const DATE_FORMAT = 'dd/MM/yyyy'
+const DATE_FORMAT = 'yyyy-MM-dd'
 
 const products = 'https://5efabb3a80d8170016f758ee.mockapi.io/products'
 

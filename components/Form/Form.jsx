@@ -13,4 +13,8 @@ const Form = styled.form`
   }
 `
 
+Form.defaultProps = {
+  method: 'post',
+}
+
 export default Form
