@@ -30,13 +30,21 @@ npm i
 via `yarn`
 
 ```sh
+# to run dev
 yarn dev
+
+# to run storybook
+yarn start:storybook
 ```
 
 via `npm`
 
 ```sh
+# to run dev
 npm run dev
+
+# to run storybook
+npm run start:storybook
 ```
 
 ## Structure
@@ -49,9 +57,88 @@ pages/       ... Next.js pages
 reducers/    ... redux related
 ```
 
-## Workflow
+## Notes
+
+### development
+
+I use component driven development; start by create a small component and run on `storybook`, so I can test it without running full application and effect another feature.
+
+It's depend on size of project, for enterprise I recommend to do something like this and team can refactor or move components into a new repository or create new package or build a system design and reuse it in another project.
+
+### state management
+
+For a small project it might not need to use `redux`, but I just want to show how we should use `redux` with `redux-toolkit`
+
+here a state for this application
+
+```yml
+rootState:
+  product:
+    selectedProduct: object of selected product
+    selectedDate: object of selected date which have max_unit per day to use in `cart/addItem`
+    products: array of products
+    error: error message when cannot fetch data from API
+    loading: loading status when fetch data from API
+  location:
+    selectedLocations: array of selected location id
+    locations: array of locations
+    error: error message when cannot fetch data from API
+    loading: loading status when fetch data from API
+  cart:
+    items: array of selected location with selected qty, available unit, fee, and price
+    total_qty: total units
+    total_price: total cart price
+    loading: loading status when call submit API
+```
+
+#### reducers
+
+- **product**
+  - fetchProducts (thunk)
+    get products data from API
+  - selectProduct
+    set selected product when product select box are changes
+  - clearProduct
+    clear selected product when product select box are changes with empty value
+  - selectDate
+    set selected date when date select box are changes
+  - clearDate
+    clear selected date when date select box are changes with empty value
+    and when product select box are changes too!
+- **location**
+  there are no reducers in `locations` but its state will changes when other reducers dispatch an action for example when `cart/addItem` are dispatch then it will push the selected location into `locatio.selectedLocation`
+  - fetchLocations (thunk)
+    get locations data from API
+- **cart**
+  - submitCart (thunk)
+    call submit cart API
+  - addItem (thunk)
+    run validation and add item into cart
+    note: there are no solution to get global state (need to get it to do validation) in "slice" except in "thunk".
+  - removeItem
+    remove item from cart
+  - updateItem
+    ... I forgot to do this one, so I just disable the input box and let's user remove items and add new one instead.
+
+### framework and tools
+
+For project with API request it might not need to use `redux-thunk` as well, but I want to how how to use `redux-thunk` with `redux-toolkit`. For this project I prefer to use `swr` or `react-query` to do request because it have state of request and can perform caching or background refresh.
+
+## testing
+
+I really don't have a time this whole week (and next week), and I'm not TDD guy. So, this project doesn't have unit test. But that doesn't mean I cannot write test.
+
+If I have more time, I prefer to test on `reducers` since it has dependencies a lot (`addItem` then update more information, `removeItem` then remove `selectedLocation`) and after that test on `containers`, since it have a lot of behavior and need to calculate and display complex data, so I will use `@testing-library/react` to mock redux dependences and perform an action then expect UI component to render.
+
+for `components` I might end up test with snapshot, since it doesn't have much logic.
+
+### commit
 
 I use `git-hook` with `husky` to do `eslint` and `format` file on `pre-commit` to prevent developer push unformat code into origin. So the code will clean and no error or warning message in repository.
+
+This one are very useful when we work as a team (or alone), because I don't need to review invalid code format, I just go through and check logic or things that matters.
+
+### release
 
 I use `commitizen`, `commitlint`, and `standard-version`. Developer need to commit in `conventional commit message` pattern, and `standard-version` will use it to generate `CHANGELOG` and `version`.
 
