@@ -16,12 +16,6 @@ export default function Cart() {
   const router = useRouter()
   const cart = useSelector(cartSelector.cart)
 
-  console.log('cart:', cart)
-
-  const handleSelectDate = (date) => {
-    console.log('select date:', date)
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -60,7 +54,7 @@ export default function Cart() {
             <ProductSelector />
           </Form.Field>
           <Form.Field label="Date">
-            <DateSelector onSelect={handleSelectDate} />
+            <DateSelector />
           </Form.Field>
           <Form.Field label="Locations">
             <LocationSelector />

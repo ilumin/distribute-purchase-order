@@ -30,9 +30,7 @@ export const submitCart = createAsyncThunk(
         quantity: item.qty,
       })),
     }
-    console.log('requestBody:', requestBody)
     const { data } = await axios.post('/api/cart', requestBody)
-    console.log('data:', data)
     return data
   }
 )
@@ -51,20 +49,17 @@ export const addItem = createAsyncThunk(
 
     // gaurd
     if (!selectedProduct || !selectedDate) {
-      console.log('no product select')
       throw new Error('Please select product and date.')
     }
 
     const locationAlreadyExists =
       items.find((item) => item.id === location.id) !== undefined
     if (locationAlreadyExists) {
-      console.log('location exists')
       throw new Error('Location already added to cart.')
     }
 
     const exceedLimit = total_qty + location.qty > selectedDate.max_qty
     if (exceedLimit) {
-      console.log('exceed limit')
       throw new Error(
         `Cannot order more than max distribution units (you've just added ${
           total_qty + location.qty

@@ -18,7 +18,6 @@ const LocationInput = ({
   }
 
   const handleRemove = (place) => () => {
-    console.log('handleRemove')
     onRemove && onRemove(place)
   }
 
