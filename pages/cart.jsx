@@ -33,7 +33,14 @@ export default function Cart() {
           <Form.Field label="Locations">
             <LocationSelector />
           </Form.Field>
-          <Form.Field label="Total Units">
+          <Form.Field
+            label="Total Units"
+            helpText={
+              cart.date && (
+                <Text>Maximum distribution unit are {cart.date.max_qty}</Text>
+              )
+            }
+          >
             <Text pt={['0.5em']} pl={['1em']}>
               {cart.total_qty}
             </Text>

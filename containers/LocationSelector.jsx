@@ -1,4 +1,5 @@
 import { useDisclosure, useToast } from '@chakra-ui/react'
+import { unwrapResult } from '@reduxjs/toolkit'
 import LocationInput from 'components/LocationInput'
 import LocationSelect from 'components/LocationSelect'
 import Modal from 'components/Modal'
@@ -36,9 +37,25 @@ const LocationSelector = () => {
     // onRemoveLocation && onRemoveLocation(location)
   }
 
-  const handleAddLocation = (location) => {
-    dispatch(addItem({ product: cart.product, location }))
-    onClose()
+  const handleAddLocation = async (location) => {
+    try {
+      const result = await dispatch(
+        addItem({ product: cart.product, location })
+      )
+      const data = unwrapResult(result)
+      console.log('data:', data)
+    } catch (error) {
+      // console.log('error:', error)
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+    } finally {
+      onClose()
+    }
   }
 
   return (

@@ -14,6 +14,56 @@ export const submitCart = createAsyncThunk(
   }
 )
 
+export const addItem = createAsyncThunk(
+  'cart/addItem',
+  async ({ product, location }, thunkAPI) => {
+    const { items, total_price, total_qty } = thunkAPI.getState().cart
+    const { selectedDate, selectedProduct } = thunkAPI.getState().product
+
+    // gaurd
+    if (!selectedProduct || !selectedDate) {
+      console.log('no product select')
+      throw new Error('Please select product and date.')
+    }
+
+    const locationAlreadyExists =
+      items.find((item) => item.id === location.id) !== undefined
+    if (locationAlreadyExists) {
+      console.log('location exists')
+      throw new Error('Location already added to cart.')
+    }
+
+    const exceedLimit = total_qty + location.available > selectedDate.max_qty
+    if (exceedLimit) {
+      console.log('exceed limit')
+      throw new Error(
+        `Cannot order more than max distribution units (you've just added ${
+          total_qty + location.available
+        }).`
+      )
+    }
+
+    // process
+    const item = {
+      id: location.id,
+      name: location.name,
+      unit_price: product.unit_price,
+      qty: location.available,
+      max_qty: location.available,
+      fee: location.fee,
+      total_price: product.unit_price * location.available + location.fee,
+    }
+
+    const newCart = {
+      items: [...items, item],
+      total_price: total_price + item.total_price,
+      total_qty: total_qty + item.qty,
+    }
+
+    return newCart
+  }
+)
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -22,22 +72,6 @@ const cartSlice = createSlice({
     total_price: 0,
   },
   reducers: {
-    addItem: (state, action) => {
-      const { product, location } = action.payload
-      const item = {
-        id: location.id,
-        name: location.name,
-        unit_price: product.unit_price,
-        qty: location.available,
-        max_qty: location.available,
-        fee: location.fee,
-        total_price: product.unit_price * location.available + location.fee,
-      }
-
-      state.items.push(item)
-      state.total_qty += item.qty
-      state.total_price += item.total_price
-    },
     removeItem: (state, action) => {
       const { id } = action.payload
       const removedItem = state.items.find((item) => item.id === id)
@@ -72,9 +106,18 @@ const cartSlice = createSlice({
       }, 0)
     },
   },
+  extraReducers: {
+    [addItem.fulfilled]: (state, action) => {
+      const { items, total_price, total_qty } = action.payload
+
+      state.items = items
+      state.total_price = total_price
+      state.total_qty = total_qty
+    },
+  },
 })
 
-export const { addItem, removeItem, updateItem } = cartSlice.actions
+export const { removeItem, updateItem } = cartSlice.actions
 
 const cart = (state) => state.cart
 const selectedProduct = (state) => state.product.selectedProduct

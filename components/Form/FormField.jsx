@@ -31,7 +31,7 @@ const FormField = ({
 FormField.propTypes = {
   children: PropTypes.node.isRequired,
   label: PropTypes.string,
-  helpText: PropTypes.string,
+  helpText: PropTypes.node,
   required: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 }
