@@ -37,14 +37,14 @@ const locationSlice = createSlice({
       state.loading = false
       state.locations = action.payload
     },
-    [addItem]: (state, action) => {
-      const { location } = action.payload
-      state.selectedLocations.push(location)
+    [addItem.fulfilled]: (state, action) => {
+      const { items } = action.payload
+      state.selectedLocations = items.map((item) => item.id)
     },
     [removeItem]: (state, action) => {
       const { id } = action.payload
       state.selectedLocations = state.selectedLocations.filter(
-        (item) => item.id !== id
+        (item) => item !== id
       )
     },
   },
@@ -57,12 +57,21 @@ export const {
 } = locationSlice.actions
 
 const location = (state) => state.location
+const selectedLocationIds = (state) => state.location.selectedLocations
 export const locationSelector = {
   selectedLocations: createSelector(
     location,
     (location) => location.selectedLocations
   ),
-  allLocations: createSelector(location, (location) => location.locations),
+  allLocations: createSelector(
+    location,
+    selectedLocationIds,
+    (location, selectedlocationIds) =>
+      location.locations.map((item) => ({
+        ...item,
+        selected: selectedlocationIds.indexOf(item.id) > -1,
+      }))
+  ),
   isLoading: createSelector(location, (location) => location.loading),
 }
 

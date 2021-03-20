@@ -51,7 +51,7 @@ const LocationInput = ({
       )
   }
 
-  const renderRemoveButton = ({ location }) => (
+  const renderRemoveButton = (location) => (
     <ButtonRemove onClick={handleRemove(location)} />
   )
 

@@ -4,7 +4,7 @@ import LocationInput from 'components/LocationInput'
 import LocationSelect from 'components/LocationSelect'
 import Modal from 'components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { addItem, cartSelector } from 'reducers/cartSlice'
+import { addItem, cartSelector, removeItem } from 'reducers/cartSlice'
 import { fetchLocations, locationSelector } from 'reducers/locationSlice'
 
 // eslint-disable-next-line
@@ -33,8 +33,8 @@ const LocationSelector = () => {
     })
   }
 
-  const handleRemoveLocation = () => {
-    // onRemoveLocation && onRemoveLocation(location)
+  const handleRemoveLocation = (location) => {
+    dispatch(removeItem(location))
   }
 
   const handleAddLocation = async (location) => {
@@ -42,10 +42,9 @@ const LocationSelector = () => {
       const result = await dispatch(
         addItem({ product: cart.product, location })
       )
-      const data = unwrapResult(result)
-      console.log('data:', data)
+      unwrapResult(result)
     } catch (error) {
-      // console.log('error:', error)
+      console.error(error)
       toast({
         title: 'Error',
         description: error.message,
