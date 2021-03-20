@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons'
-import { Box, NumberInput, NumberInputField } from '@chakra-ui/react'
+import { Box, NumberInput, NumberInputField, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
 import Button from '../Button'
@@ -22,8 +22,21 @@ const LocationInput = ({
     onRemove && onRemove(place)
   }
 
+  const renderPlace = ({ name }) => (
+    <Text fontWeight="bold" minWidth="80px">
+      {name}
+    </Text>
+  )
+
   const renderQty = ({ qty, max_qty }) => (
-    <NumberInput size="sm" value={qty} max={max_qty}>
+    <NumberInput
+      size="sm"
+      value={qty}
+      max={max_qty}
+      width="80px"
+      variant="unstyled"
+      disabled
+    >
       <NumberInputField />
     </NumberInput>
   )
@@ -33,6 +46,7 @@ const LocationInput = ({
       size="sm"
       value={total_price}
       precision={2}
+      width="80px"
       variant="unstyled"
       disabled
     >
@@ -63,7 +77,7 @@ const LocationInput = ({
   )
 
   const columns = [
-    { key: 'name', label: 'Place' },
+    { key: 'name', label: 'Place', render: renderPlace },
     { key: 'qty', label: 'Units', render: renderQty },
     { key: 'total_price', label: 'Cost', render: renderTotalPrice },
     {
