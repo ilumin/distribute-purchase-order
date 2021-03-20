@@ -24,11 +24,9 @@ const cartSlice = createSlice({
   reducers: {
     addItem: (state, action) => {
       const { product, location } = action.payload
-      console.log('product:', product)
-      console.log('location:', location)
       const item = {
-        id: product.id,
-        name: product.name,
+        id: location.id,
+        name: location.name,
         unit_price: product.unit_price,
         qty: location.available,
         max_qty: location.available,
