@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+import { submitCart } from './cartSlice'
+
 export const fetchProducts = createAsyncThunk(
   'product/fetchProducts',
   async () => {
@@ -52,6 +54,10 @@ const productSlice = createSlice({
     [fetchProducts.fulfilled]: (state, action) => {
       state.loading = false
       state.products = action.payload
+    },
+    [submitCart.fulfilled]: (state) => {
+      state.selectedProduct = undefined
+      state.selectedDate = undefined
     },
   },
 })

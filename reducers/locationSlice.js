@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { addItem, removeItem } from './cartSlice'
+import { addItem, removeItem, submitCart } from './cartSlice'
 
 export const fetchLocations = createAsyncThunk(
   'product/fetchLocations',
@@ -40,6 +40,9 @@ const locationSlice = createSlice({
     [addItem.fulfilled]: (state, action) => {
       const { items } = action.payload
       state.selectedLocations = items.map((item) => item.id)
+    },
+    [submitCart.fulfilled]: (state) => {
+      state.selectedLocations = []
     },
     [removeItem]: (state, action) => {
       const { id } = action.payload
