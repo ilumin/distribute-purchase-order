@@ -39,9 +39,15 @@ export const submitCart = createAsyncThunk(
 
 export const addItem = createAsyncThunk(
   'cart/addItem',
-  async ({ product, location }, thunkAPI) => {
+  async ({ location }, thunkAPI) => {
     const { items, total_price, total_qty } = thunkAPI.getState().cart
     const { selectedDate, selectedProduct } = thunkAPI.getState().product
+
+    if (location.qty <= 0 || location.qty > location.available) {
+      throw new Error(
+        `${selectedProduct.name} units in ${location.name} should be grater than 0 and less than ${location.available}.`
+      )
+    }
 
     // gaurd
     if (!selectedProduct || !selectedDate) {
@@ -56,12 +62,12 @@ export const addItem = createAsyncThunk(
       throw new Error('Location already added to cart.')
     }
 
-    const exceedLimit = total_qty + location.available > selectedDate.max_qty
+    const exceedLimit = total_qty + location.qty > selectedDate.max_qty
     if (exceedLimit) {
       console.log('exceed limit')
       throw new Error(
         `Cannot order more than max distribution units (you've just added ${
-          total_qty + location.available
+          total_qty + location.qty
         }).`
       )
     }
@@ -70,11 +76,11 @@ export const addItem = createAsyncThunk(
     const item = {
       id: location.id,
       name: location.name,
-      unit_price: product.unit_price,
-      qty: location.available,
+      unit_price: selectedProduct.unit_price,
+      qty: location.qty,
       max_qty: location.available,
       fee: location.fee,
-      total_price: product.unit_price * location.available + location.fee,
+      total_price: selectedProduct.unit_price * location.qty + location.fee,
     }
 
     const newCart = {

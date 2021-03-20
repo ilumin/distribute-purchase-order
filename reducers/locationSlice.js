@@ -58,6 +58,7 @@ export const {
 
 const location = (state) => state.location
 const selectedLocationIds = (state) => state.location.selectedLocations
+const selectedProduct = (state) => state.product.selectedProduct || {}
 export const locationSelector = {
   selectedLocations: createSelector(
     location,
@@ -66,10 +67,12 @@ export const locationSelector = {
   allLocations: createSelector(
     location,
     selectedLocationIds,
-    (location, selectedlocationIds) =>
+    selectedProduct,
+    (location, selectedlocationIds, product) =>
       location.locations.map((item) => ({
         ...item,
         selected: selectedlocationIds.indexOf(item.id) > -1,
+        price: product.unit_price,
       }))
   ),
   isLoading: createSelector(location, (location) => location.loading),

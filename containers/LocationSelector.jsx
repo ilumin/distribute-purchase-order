@@ -39,9 +39,7 @@ const LocationSelector = () => {
 
   const handleAddLocation = async (location) => {
     try {
-      const result = await dispatch(
-        addItem({ product: cart.product, location })
-      )
+      const result = await dispatch(addItem({ location }))
       unwrapResult(result)
     } catch (error) {
       console.error(error)
@@ -64,7 +62,7 @@ const LocationSelector = () => {
         onAppend={showLocationSelect}
         onRemove={handleRemoveLocation}
       />
-      <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <LocationSelect
           loading={isLoading}
           locations={locations}
