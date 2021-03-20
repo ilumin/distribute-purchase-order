@@ -13,6 +13,8 @@ const Select = ({ options, value, loading, onSelect, ...props }) => {
   return (
     <ChakraSelect
       {...props}
+      width={['250px']}
+      size={['md']}
       value={value}
       icon={icon}
       onChange={handleChange}

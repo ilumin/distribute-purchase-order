@@ -8,7 +8,7 @@ import {
 import PropTypes from 'prop-types'
 
 const Modal = ({ children, ...props }) => (
-  <ChakraModal {...props} size="3xl">
+  <ChakraModal {...props} size={['full', '3xl']}>
     <ModalOverlay />
     <ModalContent>
       <ModalCloseButton />

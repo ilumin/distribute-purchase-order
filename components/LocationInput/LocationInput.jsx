@@ -23,13 +23,19 @@ const LocationInput = ({
   }
 
   const renderQty = ({ qty, max_qty }) => (
-    <NumberInput value={qty} max={max_qty}>
+    <NumberInput size="sm" value={qty} max={max_qty}>
       <NumberInputField />
     </NumberInput>
   )
 
   const renderTotalPrice = ({ total_price }) => (
-    <NumberInput value={total_price} precision={2} variant="unstyled" disabled>
+    <NumberInput
+      size="sm"
+      value={total_price}
+      precision={2}
+      variant="unstyled"
+      disabled
+    >
       <NumberInputField />
     </NumberInput>
   )
@@ -37,8 +43,9 @@ const LocationInput = ({
   const renderAppendButton = () => {
     if (onAppend)
       return (
-        <Box margin={['-1em 0 -0.5em']}>
+        <Box>
           <Button
+            size="sm"
             fontSize="sm"
             leftIcon={<AddIcon />}
             onClick={handleAppend}
@@ -52,7 +59,7 @@ const LocationInput = ({
   }
 
   const renderRemoveButton = (location) => (
-    <ButtonRemove onClick={handleRemove(location)} />
+    <ButtonRemove size="sm" fontSize="sm" onClick={handleRemove(location)} />
   )
 
   const columns = [

@@ -49,7 +49,12 @@ export default function Cart() {
       <Head>
         <title>Distribute Product Order / Cart</title>
       </Head>
-      <Flex align="center" justifyContent="center" height="100vh">
+      <Flex
+        align={['normal', 'center']}
+        justifyContent={['normal', 'center']}
+        height="100vh"
+        p={2}
+      >
         <Form onSubmit={handleSubmit}>
           <Form.Field label="Product">
             <ProductSelector />

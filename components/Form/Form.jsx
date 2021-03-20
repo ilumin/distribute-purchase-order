@@ -2,8 +2,10 @@ import styled from '@emotion/styled'
 
 const Form = styled.form`
   .chakra-form-control {
-    display: grid;
-    grid-template-columns: [label] 150px [control] auto;
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: [label] 150px [control] auto;
+    }
     margin-bottom: 1em;
   }
 

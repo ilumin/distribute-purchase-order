@@ -13,11 +13,11 @@ import PropTypes from 'prop-types'
 
 const Table = ({ data, columns, loading, ...props }) => {
   return (
-    <ChakraTable variant="simple" {...props}>
+    <ChakraTable variant="simple" {...props} size="sm">
       <Thead>
         <Tr>
           {columns.map((column) => (
-            <Th key={column.key}>
+            <Th p={1} key={column.key}>
               <Skeleton isLoaded={!loading}>{column.label}</Skeleton>
             </Th>
           ))}
@@ -26,7 +26,7 @@ const Table = ({ data, columns, loading, ...props }) => {
       <Tbody>
         {data.length <= 0 && (
           <Tr>
-            <Td colSpan={columns.length}>
+            <Td p={1} colSpan={columns.length}>
               <Flex align="center" justifyContent="center" p={[4]}>
                 <Text fontSize="sm" color="gray.500">
                   Empty
@@ -39,7 +39,7 @@ const Table = ({ data, columns, loading, ...props }) => {
           <Tr key={index}>
             {columns.map((column) => {
               return (
-                <Td key={`${column.key}-${index}`}>
+                <Td p={1} key={`${column.key}-${index}`}>
                   <Skeleton isLoaded={!loading}>
                     {column.render ? (
                       column.render(row, index)

@@ -102,7 +102,7 @@ const Map = ({ markers, zoom, onRenderWindow, ...props }) => {
 
   return (
     <Skeleton isLoaded={isLoaded}>
-      <Box height={['75vh']} width="100%" {...props}>
+      <Box height={['100vh', '75vh']} width="100%" {...props}>
         {isLoaded ? renderMap() : null}
       </Box>
     </Skeleton>
