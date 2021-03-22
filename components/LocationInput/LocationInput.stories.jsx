@@ -11,9 +11,10 @@ const Template = (args) => <LocationInput {...args} />
 
 const mock = {
   location: 1,
-  place: 'Bangkok',
-  units: 10000,
-  cost: 500,
+  name: 'Bangkok',
+  qty: 10000,
+  max_qty: 10000,
+  total_price: 500,
 }
 let locations = [mock]
 

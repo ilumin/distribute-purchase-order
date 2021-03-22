@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons'
-import { Box, Input } from '@chakra-ui/react'
+import { Box, NumberInput, NumberInputField, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
 import Button from '../Button'
@@ -18,31 +18,67 @@ const LocationInput = ({
   }
 
   const handleRemove = (place) => () => {
-    console.log('handleRemove')
     onRemove && onRemove(place)
   }
 
-  const renderUnit = ({ units }) => <Input value={units} />
+  const renderPlace = ({ name }) => (
+    <Text fontWeight="bold" minWidth="80px">
+      {name}
+    </Text>
+  )
 
-  const renderCost = ({ cost }) => <Input value={cost} />
+  const renderQty = ({ qty, max_qty }) => (
+    <NumberInput
+      size="sm"
+      value={qty}
+      max={max_qty}
+      width="80px"
+      variant="unstyled"
+      disabled
+    >
+      <NumberInputField />
+    </NumberInput>
+  )
+
+  const renderTotalPrice = ({ total_price }) => (
+    <NumberInput
+      size="sm"
+      value={total_price}
+      precision={2}
+      width="80px"
+      variant="unstyled"
+      disabled
+    >
+      <NumberInputField />
+    </NumberInput>
+  )
 
   const renderAppendButton = () => {
     if (onAppend)
       return (
-        <Button leftIcon={<AddIcon />} onClick={handleAppend}>
-          Add
-        </Button>
+        <Box>
+          <Button
+            size="sm"
+            fontSize="sm"
+            leftIcon={<AddIcon />}
+            onClick={handleAppend}
+            colorScheme="cyan"
+            color="white"
+          >
+            Add
+          </Button>
+        </Box>
       )
   }
 
-  const renderRemoveButton = ({ location }) => (
-    <ButtonRemove onClick={handleRemove(location)} />
+  const renderRemoveButton = (location) => (
+    <ButtonRemove size="sm" fontSize="sm" onClick={handleRemove(location)} />
   )
 
   const columns = [
-    { key: 'place', label: 'Place' },
-    { key: 'units', label: 'Units', render: renderUnit },
-    { key: 'cost', label: 'Cost', render: renderCost },
+    { key: 'name', label: 'Place', render: renderPlace },
+    { key: 'qty', label: 'Units', render: renderQty },
+    { key: 'total_price', label: 'Cost', render: renderTotalPrice },
     {
       key: 'action',
       label: renderAppendButton(),

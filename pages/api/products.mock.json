@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "max_production": {
+      "1": 5000,
+      "2": 8000,
+      "3": 12000
+    },
+    "name": "Flyer - One Sided",
+    "price_per_unit": 0.5
+  },
+  {
+    "id": "2",
+    "max_production": {
+      "1": 3000,
+      "2": 6000,
+      "3": 9000
+    },
+    "name": "Flyer - Two Sided",
+    "price_per_unit": 0.8
+  },
+  {
+    "id": "3",
+    "max_production": {
+      "1": 2500,
+      "2": 4500,
+      "3": 7000
+    },
+    "name": "Brochure - 4 Page",
+    "price_per_unit": 1.4
+  },
+  {
+    "id": "4",
+    "max_production": {
+      "1": 2000,
+      "2": 4000,
+      "3": 6000
+    },
+    "name": "Brochure - 8 Page",
+    "price_per_unit": 2.1
+  }
+]

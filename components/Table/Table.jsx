@@ -1,8 +1,10 @@
 import {
+  Flex,
   Skeleton,
   Table as ChakraTable,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
@@ -11,26 +13,39 @@ import PropTypes from 'prop-types'
 
 const Table = ({ data, columns, loading, ...props }) => {
   return (
-    <ChakraTable variant="simple" {...props}>
+    <ChakraTable variant="simple" {...props} size="sm">
       <Thead>
         <Tr>
           {columns.map((column) => (
-            <Th key={column.key}>
+            <Th p={1} key={column.key}>
               <Skeleton isLoaded={!loading}>{column.label}</Skeleton>
             </Th>
           ))}
         </Tr>
       </Thead>
       <Tbody>
+        {data.length <= 0 && (
+          <Tr>
+            <Td p={1} colSpan={columns.length}>
+              <Flex align="center" justifyContent="center" p={[4]}>
+                <Text fontSize="sm" color="gray.500">
+                  Empty
+                </Text>
+              </Flex>
+            </Td>
+          </Tr>
+        )}
         {data.map((row, index) => (
           <Tr key={index}>
             {columns.map((column) => {
               return (
-                <Td key={`${column.key}-${index}`}>
+                <Td p={1} key={`${column.key}-${index}`}>
                   <Skeleton isLoaded={!loading}>
-                    {column.render
-                      ? column.render(row, index)
-                      : row[column.key]}
+                    {column.render ? (
+                      column.render(row, index)
+                    ) : (
+                      <Text>{row[column.key]}</Text>
+                    )}
                   </Skeleton>
                 </Td>
               )

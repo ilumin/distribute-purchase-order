@@ -5,7 +5,7 @@ const Button = ({ children, primary, ...props }) => {
   const colorScheme = primary ? 'blue' : 'gray'
 
   return (
-    <ChakraButton {...props} colorScheme={colorScheme}>
+    <ChakraButton colorScheme={colorScheme} {...props}>
       {children}
     </ChakraButton>
   )
